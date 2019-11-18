@@ -16,6 +16,7 @@ byte     8bit
 char     16bit
 float   32bit
 double   64bit
-boolean 1bit
+boolean 8bit 或32bit
 
+JVM规范指出boolean当做int处理，也就是4字节，boolean数组当做byte数组处理。，32位机器操纵更快
 2
