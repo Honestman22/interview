@@ -2,6 +2,7 @@ https://blog.csdn.net/u014664750/article/details/78980133
 
 8.有没有有顺序的Map实现类，如果有，他们是怎么保证有序的。
  treeMap和LinkedHashMap是有序的（TreeMap默认升序，LinkedHashMap则记录了插入顺序）
+
 9.抽象类和接口的区别，类可以继承多个类么，接口可以继承多个接口么,类可以实现多个接口么。
 
 1、抽象类和接口都不能直接实例化，如果要实例化，抽象类变量必须指向实现所有抽象方法的子类对象，接口变量必须指向实现所有接口方法的类对象。
@@ -121,7 +122,7 @@ Java NIO中提供的FileChannel拥有transferTo和transferFrom两个方法，可
 
 12.反射的原理，反射创建类实例的三种方式是什么。
 https://blog.csdn.net/h2604396739/article/details/83109292
-原理：
+原理：获取内存你的class对象在里面查找，遍历
 
 Classc1 = Class.forName("Employee");
 //第二种方式：
@@ -135,6 +136,9 @@ Classc3 = e.getClass(); //c3是运行时类 (e的运行时类是Employee)
 
 
 13. 反射中，Class.forName和ClassLoader区别 。
+在我们熟悉的Spring框架中的IOC的实现就是使用的ClassLoader。加载，链接，初始化
+
+
 1、加载
 Jvm把class文件字节码加载到内存中，并将这些静态数据装换成运行时数据区中方法区的类型数据，在运行时数据区堆中生成一个代表这个类的java.lang.Class对象，作为方法区类数据的访问入口。
 *注：方法区不仅仅是存放方法，它存放的是类的类型信息。
@@ -149,32 +153,110 @@ c：解析：jvm将常量池内的符号引用转换为直接引用
 
 
 Class.forName得到的class是已经初始化完成的
-Classloder.loaderClass得到的class是还没有链接的
+Classloder.loaderClass得到的class是还没有链接的  spring ioc用的是classloder
+关于classLoader的详解
+https://www.baidu.com/link?url=t-0eA8AGGRWQ_MQpHfqZx0EHu5kB_HsiDtFkGAkwQlTGgrT6f5scZm8ZvnzEAFFZn7QQdbf7RdYN4ZvGffpEs_&wd=&eqid=c7655b0400049f90000000065dd8a54b
+
 
 14.描述动态代理的几种实现方式，分别说出相应的优缺点。
+
+jdk动态代理实现
+
+jdk动态代理是jdk原生就支持的一种代理方式，它的实现原理，就是通过让target类和代理类实现同一接口，代理类持有target对象，来达到方法拦截的作用，这样通过接口的方式有两个弊端，一个是必须保证target类有接口，第二个是如果想要对target类的方法进行代理拦截，那么就要保证这些方法都要在接口中声明，实现上略微有点限制。
+
+ cglib是一个优秀的动态代理框架，它的底层使用ASM在内存中动态的生成被代理类的子类，使用CGLIB即使代理类没有实现任何接口也可以实现动态代理功能。CGLIB具有简单易用，它的运行速度要远远快于JDK的Proxy动态代理：
+
+cglib有两种可选方式，继承和引用。第一种是基于继承实现的动态代理，所以可以直接通过super调用target方法，但是这种方式在spring中是不支持的，因为这样的话，这个target对象就不能被spring所管理，所以cglib还是才用类似jdk的方式，通过持有target对象来达到拦截方法的效果
+
+jdk动态代理实现 创建代理类快，执行过程慢
+cglib创建代理类慢，执行过程快
+
+（基于invocationHandler和methodInterceptor）
 
 15.动态代理与cglib实现的区别。
 
 16. 为什么CGlib方式可以对接口实现代理。
 
 17.final的用途
+ 用final修饰的类不能被扩展，也就是说不可能有子类；
+用final修饰的方法不能被替换或隐藏：
+使用final修饰的实例方法在其所属类的子类中不能被替换（overridden）；
+使用final修饰的静态方法在其所属类的子类中不能被重定义（redefined）而隐藏（hidden）；
+用final修饰的变量最多只能赋值一次，在赋值方式上不同类型的变量或稍有不同：
+静态变量必须明确赋值一次（不能只使用类型缺省值）；作为类成员的静态变量，赋值可以在其声明中通过初始化表达式完成，也可以在静态初始化块中进行；作为接口成员的静态变量，赋值只能在其声明中通过初始化表达式完成；
+实例变量同样必须明确赋值一次（不能只使用类型缺省值）；赋值可以在其声明中通过初始化表达式完成，也可以在实例初始化块或构造器中进行；
+方法参数变量在方法被调用时创建，同时被初始化为对应实参值，终止于方法体（body）结束，在此期间其值不能改变；
+构造器参数变量在构造器被调用（通过实例创建表达式或显示的构造器调用）时创建，同时被初始化为对应实参值，终止于构造器体结束，在此期间其值不能改变；
+异常处理器参数变量在有异常被try语句的catch子句捕捉到时创建，同时被初始化为实际的异常对象，终止于catch语句块结束，在此期间其值不能改变；
+局部变量在其值被访问之前必须被明确赋值；
 
+ 
 18. 写出三种单例模式实现 。
+懒汉式，用到才去加载
 
-19.如何在父类中为子类自动完成所有的hashcode和equals实现？这么做有何优劣
+/**
+ * 单例模式：饿汉式
+ * 在类加载时，就创建单例对象
+ * 执行效率高，但是占空间，以空间换时间
+ * 线程安全
+ */
+public class Hungry {
+
+    private static final Hungry hungry = new Hungry();
+
+    private Hungry(){}
+
+    public static Hungry getInstance(){
+        return  hungry;
+    }
+}
+/**
+ * 单例模式：懒汉式  双重判断
+ * 对象使用的时候，才去创建
+ * 有线程安全的风险，需要加锁
+ */
+public class Lazy1 {
+    private Lazy1(){}
+
+    private static Lazy1 instance = null;
+
+    public static Lazy1 getInstance(){
+        if(instance == null){
+            synchronized (Lazy1.class){
+                if(instance == null){
+                    instance = new Lazy1();
+                }
+            }
+        }
+        return instance;
+    }
+}
+/**
+ *单例模式：懒汉式  静态内部类
+ * 静态内部类在使用时，才加载
+ * 此种模式，既是懒加载，又没有加锁影响性能
+ */
+public class Lazy2 {
+    private Lazy2(){}
+
+    public static final Lazy2 getInstance(){
+        return LazyLoad.instance;
+    }
+
+    private static class LazyLoad{
+        private static final Lazy2 instance = new Lazy2();
+    }
+}
+
 
 20.请结合OO设计理念，谈谈访问修饰符public、private、protected、default在应用设计中的作用。
 
-21.深拷贝和浅拷贝区别。
+确保实现继承，多态，封装
+public： Java语言中访问限制最宽的修饰符，一般称之为“公共的”。被其修饰的类、属性以及方法不仅可以跨类访问，而且允许跨包（package）访问。
 
-22. 数组和链表数据结构描述，各自的时间复杂度。
-23.error和exception的区别，CheckedException，RuntimeException的区别。
-24. 请列出5个运行时异常
-25. 在自己的代码中，如果创建一个java.lang.String类，这个类是否可以被类加载器加载？为什么
-26.说一说你对java.lang.Object对象中hashCode和equals方法的理解。在什么场景下需要重新实现这两个方法。
-27.在jdk1.5中，引入了泛型，泛型的存在是用来解决什么问题
-28. 这样的a.hashcode() 有什么用，与a.equals(b)有什么关系。
-29.有没有可能2个不相等的对象有相同的hashcode。
-30. Java中的HashSet内部是如何工作的。
-31. 什么是序列化，怎么序列化，为什么序列化，反序列化会遇到什么问题，如何解决。
-32. java8的新特性。
+private: Java语言中对访问权限限制的最窄的修饰符，一般称之为“私有的”。被其修饰的类、属性以及方法只能被该类的对象访问，其子类不能访问，更不能允许跨包访问。
+
+protect: 介于public 和 private 之间的一种访问修饰符，一般称之为“保护形”。被其修饰的类、属性以及方法只能被类本身的方法及子类访问，即使子类在不同的包中也可以访问。
+
+default：即不加任何访问修饰符，通常称为“默认访问模式“。该模式下，只允许在同一个包中进行访问。
+
