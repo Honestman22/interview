@@ -15,5 +15,9 @@
 （4）COUNT(column)对特定的列的值具有的行数进行计算，不包含NULL值
 （5）COUNT(条件表达式)，不管记录是否满足条件表达式，只要非NULL就加1
 
+sum经典用法
+====
 select   sum(1) as 所有条数，sum(a=2) as 符合条件的条数，sum(a=1) as 符合条件的条数  from 表 group  by
+示例
+====
 SELECT TYPE ,sum(a>2) num from(select type , pid ,count(*) a from t_test group by type,pid) a group by type; 
