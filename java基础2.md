@@ -40,7 +40,16 @@ Node类的数组和链表+红黑树
 
 (5) 还没升级JDK1.8的，现在开始升级吧。HashMap的性能提升仅仅是JDK1.8的冰山一角。
 
-7.JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。
+## 7.JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计。
+
+
+1、加入多个分段锁浪费内存空间。(jdk7中 Segment extends ReentrantLock)
+
+2、生产环境中， map 在放入时竞争同一个锁的概率非常小，分段锁反而会造成更新等操作的长时间等待。
+
+3、为了提高 GC 的效率
+
+
 
 https://www.cnblogs.com/aspirant/p/8623864.html
 
