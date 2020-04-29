@@ -4,9 +4,9 @@
 
 　　2 使用system系统类加载器加载
 
-　　3 使用应用类加载器在webAPP WEB-INF/classes中加载
+　　3 使用应用类加载器在webAPP WEB-INF/classes中加载   实现应用隔离，未遵循双亲委派机制
 
-　　4 使用应用类加载器在webAPP WEB-INF/lib中加载
+　　4 使用应用类加载器在webAPP WEB-INF/lib中加载 
 
 　　5 使用common类加载器在CATALINA_HOME/lib中加载
 
