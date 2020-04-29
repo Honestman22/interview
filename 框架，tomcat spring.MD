@@ -1,4 +1,15 @@
 ## 4.5.5 简单讲讲tomcat结构，以及其类加载器流程，线程模型等。
+
+  　1 使用bootstrap引导类加载器加载
+
+　　2 使用system系统类加载器加载
+
+　　3 使用应用类加载器在webAPP WEB-INF/classes中加载
+
+　　4 使用应用类加载器在webAPP WEB-INF/lib中加载
+
+　　5 使用common类加载器在CATALINA_HOME/lib中加载
+
 设来自客户的请求为：http://localhost:8080/test/index.jsp
 请求被发送到本机端口8080，被在那里侦听的Coyote HTTP/1.1 Connector获得
 
