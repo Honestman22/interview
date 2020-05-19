@@ -53,6 +53,10 @@ HashSet在存元素时，会调用对象的hashCode方法计算出存储位置�
 正因为这样的原理，HashSet集合是非常高效的。 
 比如，要查找集合中是否包含某个对象，首先计算对象的hashCode，折算出位置号，到该位置上去找就可以了，而不用和所有的元素都比较一遍 
 
+value是一个final修饰的Object；代码需要；
+
+和redis不同，redis的value是null；
+
 ## 三、Collection和Collections的区别 
 两者没有任何关系 
 Collection是单列集合的父接口，JDK1.5中定义了Iterable接口作为Collection父类，为了实现增强for循环 
