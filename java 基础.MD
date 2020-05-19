@@ -9,13 +9,20 @@
 
 1TB=1024GB
 
-int     32bit
+int     32bit 
+
 short   16bit
+
 long     64bit
+
 byte     8bit
+
 char     16bit
+
 float   32bit
+
 double   64bit
+
 boolean 8bit 或32bit
 
 JVM规范指出boolean当做int处理，也就是4字节，boolean数组当做byte数组处理。，32位机器操纵更快
@@ -27,16 +34,23 @@ JVM规范指出boolean当做int处理，也就是4字节，boolean数组当做by
 关于final修饰符，介绍如下：
 
 根据程序上下文环境，Java关键字final有“这是无法改变的”或者“终态的”含义，它可以修饰非抽象类、非抽象类成员方法和变量。你可能出于两种理解而需要阻止改变：设计或效率。 
-　　final类不能被继承，没有子类，final类中的方法默认是final的。 
-　　final方法不能被子类的方法覆盖，但可以被继承。 
+　final类不能被继承，没有子类，final类中的方法默认是final的。
+ 
+　　final方法不能被子类的方法覆盖，但可以被继承。
+  
 　　final成员变量表示常量，只能被赋值一次，赋值后值不再改变。 
+  
 　　final不能用于修饰构造方法。 
+  
 　　注意：父类的private成员方法是不能被子类方法覆盖的，因此private类型的方法默认是final类型的。
-
+  
 如果一个类不允许其子类覆盖某个方法，则可以把这个方法声明为final方法。 
 　　使用final方法的原因有二： 
+  
 　　第一、把方法锁定，防止任何继承类修改它的意义和实现。 
+  
 　　第二、高效。编译器在遇到调用final方法时候会转入内嵌机制，大大提高执行效率。
+  
   
 ## 3.String，Stringbuffer，StringBuilder的区别
   string 不可变对象
