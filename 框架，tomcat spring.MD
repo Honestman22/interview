@@ -37,6 +37,9 @@ Engine把HttpServletResponse对象返回给Connector
 
 Connector把HttpServletResponse对象返回给客户browser
 
+4个子容器的作用分别是：
+
+（1）Engine：引擎，用来管理多个站点，一个Service最多只能有一个Engine； （2）Host：代表一个站点，也可以叫虚拟主机，通过配置Host就可以添加站点； （3）Context：代表一个应用程序，对应着平时开发的一套程序，或者一个WEB-INF目录以及下面的web.xml文件； （4）Wrapper：每一Wrapper封装着一个Servlet；
 
 BIO,NIO,AIO,APR
 
@@ -78,7 +81,8 @@ spring事务的传播行为说的是，当多个事务同时存在的时候，sp
 ## 4.6.1 Spring怎么配置事务（具体说出一些关键的xml 元素）。
 
 ## 4.6.2 说说你对Spring的理解，非单例注入的原理？它的生命周期？循环注入的原理，aop的实现原理，说说aop中的几个术语，它们是怎么相互工作的。
-
+非单列，每次获取就创建一个新的bean，
+循环注入通过多级缓存解决，
 ## 4.6.3 Springmvc 中DispatcherServlet初始化过程。
  HttpServletBean、FrameworkServlet、DispatcherServlet三个不同的类层次，SpringMVC对三个以抽象和继承来实现不用的功能，分工合作，实现了解耦的设计原则。
 
@@ -135,7 +139,7 @@ Heap和Direct（堆内存与堆外内存）
 
 4. 使用主从Reactor多线程模型，提高并发性 
 5. 采用了串行无锁化设计，在IO线程内部进行串行操作，避免多线程竞争导致的性能下降 
-
+内存队列
 ## 5.5 Netty 的高效并发编程主要体现在如下几点：
 volatile 的大量、正确使用;
 CAS 和原子类的广泛使用；
@@ -171,10 +175,14 @@ CAS 和原子类的广泛使用；
    3 将消息分为消息头和消息体，在消息头中包含表示消息总长度的字段，然后就行业务逻辑的处理
    
 ## 4.6.7 netty的fashwheeltimer的用法，实现原理，是否出现过调用不够准时，怎么解决。
+
 ## 4.6.8 netty的心跳处理在弱网下怎么办。
+
 ## 4.6.9 netty的通讯协议是什么样的。
+
 https://segmentfault.com/a/1190000020591659?utm_source=tag-newest
-4.7.0 springmvc用到的注解，作用是什么，原理。
+
+## 4.7.0 springmvc用到的注解，作用是什么，原理。
 1. 客户端请求提交到DispatcherServlet
 
 2. 由DispatcherServlet控制器查询一个或多个HandlerMapping，找到处理请求的Controller
@@ -220,7 +228,7 @@ annotation-driven 扫描指定包中类上的注解，常用的注解有:
 @ResponseBody
 @Scope("prototype") 设定bean的作用域
  
-4.7.1 springboot启动机制。
+## 4.7.1 springboot启动机制。
 @Configuration（@SpringBootConfiguration点开查看发现里面还是应用了@Configuration）
 @EnableAutoConfiguration
 @ComponentScan
@@ -231,30 +239,29 @@ annotation-driven 扫描指定包中类上的注解，常用的注解有:
 根据classpath下是否存在(ConfigurableWebApplicationContext)判断是否要启动一个web applicationContext。
 SpringFactoriesInstances加载classpath下所有可用的ApplicationContextInitializer
 SpringFactoriesInstances加载classpath下所有可用的ApplicationListener
-clipboard.png
+
 
 1.3.2 SpringApplicatio实例化完成并且完成配置后调用run()方法,首先遍历初始化过程中加载的SpringApplicationRunListeners，然后调用starting(),开始监听springApplication的启动。
 
-clipboard.png
+
 
 1.3.3 加载SpringBoot配置环境(ConfigurableEnvironment)，如果是通过web容器发布，会加载StandardEnvironment。将配置环境(Environment)加入到监听器对象中(SpringApplicationRunListeners)。
 
 1.3.4 banner属性的设置
 
-clipboard.png
+
 
 1.3.5 ConfigurableApplicationContext(应用配置上下文)创建，根据webEnvironment是否是web环境创建默认的contextClass 
 ,AnnotationConfigEmbeddedWebApplicationContext(通过扫描所有注解类来加载bean)和ConfigurableWebApplicationContext),最后通过BeanUtils实例化上下文对象，并返回。
 
-clipboard.png
+
 
 1.3.6 prepareContext()方法将listeners、environment、applicationArguments、banner等重要组件与上下文对象关联。
 
-clipboard.png
+
 
 1.3.7 refreshContext(context),bean的实例化完成IoC容器可用的最后一道工序。
 
-clipboard.png
 
 1.3.8 最后springboot做一些收尾工作。自此springboot的简单流程到此结束。
 https://blog.csdn.net/u011961421/article/details/80227453
