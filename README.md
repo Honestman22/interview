@@ -15,3 +15,5 @@ https://studygolang.com/articles/14834
 锁深入了解 https://blog.csdn.net/weixin_42762133/article/details/103241439?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.edu_weight
 
 notify是顺序唤醒https://blog.csdn.net/thlzjfefe/article/details/109961385
+
+死磕重量级锁
