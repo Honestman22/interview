@@ -17,3 +17,6 @@ https://studygolang.com/articles/14834
 notify是顺序唤醒https://blog.csdn.net/thlzjfefe/article/details/109961385
 
 死磕重量级锁 https://www.jianshu.com/p/09de11d71ef8
+
+
+https://www.cnblogs.com/java-dyb/p/10912749.html
