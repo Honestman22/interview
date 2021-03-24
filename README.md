@@ -20,3 +20,6 @@ notify是顺序唤醒https://blog.csdn.net/thlzjfefe/article/details/109961385
 
 
 https://www.cnblogs.com/java-dyb/p/10912749.html
+
+干货
+https://blog.csdn.net/qq_27384769/article/details/81217387
