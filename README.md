@@ -23,3 +23,5 @@ https://www.cnblogs.com/java-dyb/p/10912749.html
 
 干货
 https://blog.csdn.net/qq_27384769/article/details/81217387
+
+hashmap fail fast spi 缓存一致性协议 threadlocal
